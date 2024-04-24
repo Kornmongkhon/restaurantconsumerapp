@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: restaurantconsumerapp
+  datasource:
+    username: user
+    password: password
+    url: jdbc:mysql://localhost:3306/restaurant
+    driver-class-name: com.mysql.cj.jdbc.Driver
+kafka:
+  server: localhost:29092
+  topics:
+    restaurant: restaurant.topic
+    served: restaurantServed.topic
+  groupid:
+    restaurant: group.restaurant.topic
+  offset-reset: earliest
+server:
+  port: 8081
