@@ -13,6 +13,7 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Configuration
 public class KafkaConsumeConfiguration {
@@ -28,6 +29,7 @@ public class KafkaConsumeConfiguration {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,server);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class);
+        props.put(ConsumerConfig.GROUP_INSTANCE_ID_CONFIG,"restaurant"+ UUID.randomUUID());
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,kafkaOffsetReset);
         return props;
     }

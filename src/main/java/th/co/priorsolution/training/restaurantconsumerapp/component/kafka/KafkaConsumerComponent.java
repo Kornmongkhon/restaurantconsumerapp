@@ -15,12 +15,12 @@ public class KafkaConsumerComponent {
         this.restaurantService = restaurantService;
     }
 
-    @KafkaListener(topics = "${kafka.topics.restaurant}",groupId = "${kafka.groupid.restaurant}")
+    @KafkaListener(topics = "${kafka.topics.restaurant.name}",groupId = "${kafka.groupid.restaurant}")
     public void consumerInsertOrderMessage(@Payload String message) throws Exception{
         log.info("factory got message got {}",message);
         this.restaurantService.insertOrder(message);
     }
-    @KafkaListener(topics = "${kafka.topics.served}",groupId = "${kafka.groupid.restaurant}")
+    @KafkaListener(topics = "${kafka.topics.served.name}",groupId = "${kafka.groupid.served}")
     public void consumerServedOrderMessage(@Payload String message) throws Exception{
         log.info("factory got message got {}",message);
         this.restaurantService.updateServedOrderStatus(message);

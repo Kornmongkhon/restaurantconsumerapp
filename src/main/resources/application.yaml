@@ -9,10 +9,13 @@ spring:
 kafka:
   server: localhost:29092
   topics:
-    restaurant: restaurant.topic
-    served: restaurantServed.topic
+    restaurant:
+      name: restaurant.topic
+    served:
+      name: restaurantServed.topic
   groupid:
     restaurant: group.restaurant.topic
+    served: group.restaurantServed.topic
   offset-reset: earliest
 server:
   port: 8081

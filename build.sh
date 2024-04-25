@@ -1,2 +1,2 @@
 mvn clean package
-docker build -t restaurantconsumerapp:1.0 .
+docker build -t restaurantconsumerapp:1.1 .

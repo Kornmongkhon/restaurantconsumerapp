@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: restaurantconsumer-configmap
+  namespace: restaurant-dev
+data:
+  application.yaml: |+
+    spring:
+      application:
+        name: restaurantconsumer
+      datasource:
+        username: user
+        password: password
+        url: jdbc:mysql://host.minikube.internal:3306/restaurant
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    kafka:
+      server: host.minikube.internal:29092
+      topics:
+        restaurant: 
+          name: restaurant.topic
+        served: 
+          name: restaurantServed.topic
+      groupid:
+        restaurant: group.restaurant.topic
+        served: group.restaurantServed.topic
+      offset-reset: earliest
+    server:
+      port: 8080
+      servlet:
+        context-path: /restaurantconsumer

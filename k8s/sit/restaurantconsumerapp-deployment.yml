@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restaurantconsumer-deployment
+  namespace: restaurant-dev
+  labels:
+    app: restaurantconsumer-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: restaurantconsumer-deployment
+  template:
+    metadata:
+      labels:
+        app: restaurantconsumer-deployment
+    spec:
+      hostAliases:
+        - ip: 127.0.0.1
+          hostnames:
+            - localhost
+      containers:
+      - name: restaurantconsumer-deployment
+        image: restaurantconsumer:1.2
+        imagePullPolicy: Never
+        ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /restaurantconsumer/actuator/health
+            port: http
+          failureThreshold: 3
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /restaurantconsumer/actuator/health
+            port: http
+          failureThreshold: 3
+          periodSeconds: 30
+        env:
+        - name: SPRING_CONFIG
+          value: "--spring.config.location=/home/app/config/application.yaml"
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://host.minikube.internal:3306/restaurant
+        volumeMounts:
+        - name: restaurantconsumer-volume
+          subPath: application.yaml
+          mountPath: /home/app/config/application.yaml
+      volumes:
+      - name: restaurantconsumer-volume
+        configMap:
+          name: restaurantconsumer-configmap
+
